@@ -6,7 +6,7 @@ gulp.task 'default', ->
     gulp.watch '**/*.coffee', ['test']
 
 gulp.task 'test', ->
-    gulp.src 'test.coffee', {read: false}
+    gulp.src 'test/test.coffee', {read: false}
         .pipe(mocha())
 
 

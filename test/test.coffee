@@ -1,7 +1,7 @@
 mocha = require 'mocha'
 chai = require 'chai'
 expect = chai.expect
-Flextractor = require './main.coffee'
+Flextractor = require '../'
 
 domainTypes =
     [
