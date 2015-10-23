@@ -1,0 +1,27 @@
+{
+  "name": "flextractor",
+  "version": "0.0.1",
+  "description": "Module for extracting datasets from unstructured text",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FranzSkuffka/flextractor.git"
+  },
+  "keywords": [
+    "information",
+    "extracation",
+    "alchemy",
+    "classification",
+    "language",
+    "processing"
+  ],
+  "author": "Jan Wirth",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FranzSkuffka/flextractor/issues"
+  },
+  "homepage": "https://github.com/FranzSkuffka/flextractor#readme"
+}
