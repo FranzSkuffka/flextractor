@@ -30,19 +30,16 @@ describe 'NER Module', ->
     it 'Should throw if no input is provided', ->
         (=> @ner()).should.throw()
         (=> @ner('Isaac Newton')).should.not.throw()
-    it 'Should recognize E-Mail Adresses', (done) ->
+    it 'Should recognize E-Mail adresses', (done) ->
         @ner('someone@somedomain.com')
             .then (entities) ->
-                emails = entities.get().emails
-                address = emails[0].value
-                expect(address).to.equal('someone@somedomain.com')
+                expect(entities.emails[0].value).to.equal('someone@somedomain.com')
                 done()
     it 'Should recognize names', (done) ->
-        @ner('Witney Houston')
+        name = 'Abraham Jacos'
+        @ner(name)
             .then (entities) =>
-                persons = entities.get().persons
-                name = persons[0].value
-                expect(name).to.equal('Witney Houston')
+                expect(entities.persons[0].value).to.equal(name)
                 done()
 
 
