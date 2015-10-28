@@ -1,12 +1,10 @@
 gulp = require 'gulp'
-mocha = require 'gulp-mocha'
+shell = require 'gulp-shell'
 
 gulp.task 'default', ->
     gulp.start 'test'
     gulp.watch '**/*.coffee', ['test']
 
 gulp.task 'test', ->
-    gulp.src 'test/test.coffee', {read: false}
-        .pipe(mocha())
-
-
+    gulp.src ''
+        .pipe shell 'npm test'
