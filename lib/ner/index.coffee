@@ -6,10 +6,12 @@ alchemyEntities = require './services/alchemyPromise.coffee'
 class EntityCollection
     entities: {}
     add: (entity) ->
-        if !@entities[entity.type]?
-            @entities[entity.type] = [entity]
+        # assign entity to entity list with pluralized type as name
+        pluralTypeName = entity.type + 's'
+        if !@entities[pluralTypeName]?
+            @entities[pluralTypeName] = [entity]
         else
-            @entities[entity.type].push entity
+            @entities[pluralTypeName].push entity
     get: -> @entities
 
 
