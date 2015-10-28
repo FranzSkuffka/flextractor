@@ -1,27 +1,31 @@
 Promise = require 'bluebird'
-
-Alchemy = require './alchemy.js'
-alchemyCallback = new Alchemy
-
-alchemyEntities = (callback) ->
-    new Promise
-    alchemy.entities "text", text, {'language': 'german'}, callback
+knwlEntities = require './services/knwlPromise.coffee'
+alchemyEntities = require './services/alchemyPromise.coffee'
 
 
-Knwl    = require 'knwl.js'
-knwlSync    = new Knwl 'german'
-
-knwlEntities = (text) ->
-    new Promise (resolve) ->
-        knwlSync.init text
-        results = []
-        results.push knwlSync.get 'emails'
-        resolve results
+class EntityCollection
+    entities: {}
+    add: (entity) ->
+        if !@entities[entity.type]?
+            @entities[entity.type] = [entity]
+        else
+            @entities[entity.type].push entity
+    get: -> @entities
 
 
 ner = (text) ->
-    # alchemy text
-    knwlEntities text
+    if !text?
+        throw new Error('No input provided')
+    # join api results
+    Promise.all [knwlEntities(text), alchemyEntities(text)]
+        .then (data ) ->
+            new Promise (resolve) ->
+                # add to entity collection
+                entities = new EntityCollection()
+                for entityList in data
+                    for entity in entityList
+                        entities.add entity
+                resolve entities
 
 
 module.exports = ner
