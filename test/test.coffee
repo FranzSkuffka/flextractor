@@ -33,14 +33,24 @@ describe 'NER Module', ->
     it 'Should recognize E-Mail adresses', (done) ->
         @ner('someone@somedomain.com')
             .then (entities) ->
-                expect(entities.emails[0].value).to.equal('someone@somedomain.com')
+                expect(entities.emailAdressList[0].value).to.equal('someone@somedomain.com') # eeeh plural?
                 done()
-    it 'Should recognize names', (done) ->
+    it 'Should recognize personal Names', (done) ->
         name = 'Abraham Jacos'
         @ner(name)
             .then (entities) =>
-                expect(entities.persons[0].value).to.equal(name)
+                expect(entities.personNameList[0].value).to.equal(name)
                 done()
+
+# describe 'Classification Module', ->
+    # before ->
+        # @classifier = require('../lib/classifier/index.coffee')(
+
+    # it 'Should not classify if no required features are recognized', (done) ->
+    # it 'Should correctly classify a company', (done) ->
+        # @classifier()
+            # .then (entities) ->
+                # expect(entities.emails[0].value).to.equal('someone@somedomain.com')
 
 
 

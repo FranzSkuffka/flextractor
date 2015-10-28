@@ -3,8 +3,14 @@ Alchemy = require './alchemy.js'
 alchemy = new Alchemy()
 
 alchemyEntities = (text) ->
-    mapEntityName = (name) ->
-        name.toLowerCase()
+    entityMap =
+        Person: 'personName'
+        Company: 'companyName'
+    mapEntityName = (name) =>
+        if entityMap[name]?
+            entityMap[name]
+        else
+            name.toLowerCase()
     new Promise (resolve) ->
         alchemy.entities "text", text, {'language': 'german'}, (res) ->
             results = []

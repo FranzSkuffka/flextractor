@@ -10,7 +10,7 @@ ner = (text) =>
         entities = {}
         for entity in entityList
             # assign entity to entity list with pluralized type as name
-            pluralTypeName = entity.type + 's'
+            pluralTypeName = entity.type + 'List'
             if !entities[pluralTypeName]?
                 entities[pluralTypeName] = [entity]
             else
