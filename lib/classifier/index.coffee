@@ -28,7 +28,6 @@ class Classifier
         # train network
 
     classify: (recognizedFeatures) ->
-        console.log 'CLASSIFYING'
         new Promise (resolve) =>
             # map features to vector
             featureVector = []
@@ -46,83 +45,11 @@ class Classifier
             # map output to class labels
             confidences = @net.run featureVector
             assignedLabels = []
-            console.log @classes
             for label,i in @classes
-                console.log label
-                console.log confidences
                 if confidences[i] > 0.1
                     assignedLabels.push label.name
-            console.log assignedLabels
             # map output to classes
             # insert threshold of 0.1
             resolve assignedLabels
 
-
 module.exports = Classifier
-
-
-
-
-# generate a training set example for each model
-# trainingSetPerModel = []
-# modelIndex = 0
-
-# for model in modelSpace
-    # # AND connection for features in feature space
-    # input = []
-    # # AND connection for models in modelspace
-    # output = []
-
-    # for feature in featureSpace
-        # if model.relatives.indexOf(feature.entry) > -1
-            # input.push 1
-        # else
-            # input.push 0
-    # # determine position of model in model space
-    # for modelOfSpace in modelSpace
-        # if model.entry == modelOfSpace.entry
-            # output.push 1
-        # else
-            # output.push 0
-
-    # trainingSetPerModel.push
-        # input: input
-        # output: output
-
-
-
-# net = new brain.NeuralNetwork()
-# net.train trainingSetPerModel
-# netResult = net.run [1,1,0]
-
-# mapNetResultToModelSpace = (netResult) ->
-    # modelIndex = 0
-    # resultPerModel = []
-    # for model in modelSpace
-        # resultPerModel.push
-            # model: model.entry
-            # result: netResult[modelIndex]
-        # modelIndex++
-    # resultPerModel
-
-# mapFeaturesToFeatureSpace = (features) ->
-    # mappedFeatures = []
-    # for featureOfSpace in featureSpace
-        # # find if current feature of the space is found in given features
-        # if features.indexOf(featureOfSpace.entry) > -1
-            # mappedFeatures.push 1
-        # else
-            # mappedFeatures.push 0
-    # mappedFeatures
-
-
-# if results are equal: none are likely
-# set feature threshold: 2 through summing up input vector
-# todo: capsulate mapping processes
-# todo: rename mapping to vector mappin
-# todo: rename entry to entryname
-# module.exports = (features) =>
-    # mappedFeatures = mapFeaturesToFeatureSpace features
-    # mappedResults = mapNetResultToModelSpace net.run mappedFeatures
-    # mappedResults.sort (a,b) ->
-        # b.result - a.result
