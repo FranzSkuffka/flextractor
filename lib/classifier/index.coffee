@@ -24,6 +24,11 @@ class Classifier
                 @features[feature.name] = [domainType.name]
 
     addClass: (domainType) ->
+        domainType.requires = (requiredField) ->
+            for field in this.fields
+                return true if field.name == requiredField && field.required
+            return false
+
         @classes.push domainType
         # train network
 

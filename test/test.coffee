@@ -51,19 +51,27 @@ describe 'NER Module', ->
                 expect(entities.personNameList[0].value).to.equal(name)
                 done()
 
-describe 'Classification Module', ->
+describe 'Classification Module', -> #generate tests iteratively
     before ->
         Classifier = require('../lib/classifier/index.coffee')
         @classifier = new Classifier(domainTypes)
 
     it 'Should not classify if no required features are recognized', (done) ->
-        @classifier.classify([])
-            .then (classes) ->
+        @classifier.classify(['phoneNumber'])
+            .then (classes) =>
                 done()
-    # it 'Should correctly classify a company', (done) ->
-        # @classifier()
-            # .then (entities) ->
-                # expect(entities.emails[0].value).to.equal('someone@somedomain.com')
+                expect(classes).to.equal []
+    it 'Should correctly classify an account', (done) ->
+        @classifier.classify(['companyName'])
+            .then (classes) =>
+                done()
+                expect(classes).to.equal ['Account']
+    it 'Should correctly classify a contact', (done) ->
+        @classifier.classify(['companyName'])
+            .then (classes) =>
+                done()
+                expect(classes).to.equal ['account']
+
 
 
 
