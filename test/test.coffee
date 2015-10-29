@@ -13,6 +13,15 @@ domainTypes =
             ,
                 name: 'phoneNumber'
             ]
+    ,
+        name: 'Contact'
+        fields:
+            [
+                name: 'personName'
+                required: true
+            ,
+                name: 'phoneNumber'
+            ]
     ]
 
 # describe 'API', ->
@@ -42,11 +51,15 @@ describe 'NER Module', ->
                 expect(entities.personNameList[0].value).to.equal(name)
                 done()
 
-# describe 'Classification Module', ->
-    # before ->
-        # @classifier = require('../lib/classifier/index.coffee')(
+describe 'Classification Module', ->
+    before ->
+        Classifier = require('../lib/classifier/index.coffee')
+        @classifier = new Classifier(domainTypes)
 
-    # it 'Should not classify if no required features are recognized', (done) ->
+    it 'Should not classify if no required features are recognized', (done) ->
+        @classifier.classify([])
+            .then (classes) ->
+                done()
     # it 'Should correctly classify a company', (done) ->
         # @classifier()
             # .then (entities) ->
