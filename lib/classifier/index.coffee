@@ -10,29 +10,28 @@ class Classifier
         @labels = @mapper.classes
     classify: (recognizedFeatures) ->
         new Promise (resolve) =>
-            # map features to vector
+            # initialize feature vector with length of all features
             featureVector = Array.apply(null, Array(Object.keys(@features).length)).map(Number.prototype.valueOf,0)
+            # current Position in feature vector
             featureDimension = 0
-            for feature of @features
-                # any features recognized, map to input vector
-                if recognizedFeatures.length > 0
+            # if features recognized
+            if recognizedFeatures.length > 0
+                # go through all features and put 1 into inputvector if it is the current feature
+                for feature of @features
                     for recognizedFeature  in recognizedFeatures
                         if recognizedFeature == feature
                             featureVector[featureDimension] = 1
-                        else
-                            featureVector[featureDimension] = 0
-                featureDimension++
+                    featureDimension++
+            # get confidences
             confidences = @net.run featureVector
             # map output to class labels
-            #
             assignedLabels = []
             labelDimension = 0
             for label in @labels
+                # insert threshold of 0.1
                 if confidences[labelDimension] > 0.1
                     assignedLabels.push label.name
                 labelDimension++
-            # map output to labels
-            # insert threshold of 0.1
             resolve assignedLabels
 
 module.exports = Classifier
