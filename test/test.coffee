@@ -25,12 +25,13 @@ domainTypes =
             ]
     ]
 
-# describe ContactAPI', ->
-    # before ->
-        # @extractor = new Flextractor domainTypes
-    # it 'should return 42', ->
-        # @extractor.extract().then (data) ->
-            # expect(data).to.equal(42)
+describe 'API', ->
+    before ->
+        @extractor = new Flextractor domainTypes
+    it 'should return 42', (done) ->
+        @extractor.extract('Jan Wirth').then (data) ->
+            console.log data
+            done()
 
 
 describe 'NER Module', ->
