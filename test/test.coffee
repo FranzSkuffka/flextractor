@@ -3,6 +3,7 @@ chai         =  require      'chai'
 expect       =  chai.expect
 Flextractor  =  require      '../'
 brain        =  require      'brain'
+Entity       =  require '../lib/ner/services/Entity'
 
 domainTypes =
     [
@@ -98,7 +99,19 @@ describe 'Classification Module', -> #generate tests iteratively
                 done()
             .catch(done)
 
+describe 'IE Module', -> # disambiguation of affiliation
+    before ->
+        @informationExtractor = require '../lib/ie/index'
+    it 'Should disambiguate Account and Company E-Mail adresses', (done) ->
+        entities = {personNameList: [], companyNameList: [], emailAddressList: []}
+        entities.companyNameList.push  new Entity 'companyName', 'OpenSauce Inc'
+        entities.personNameList.push   new Entity 'contactName', 'Sam Johnson'
+        entities.emailAddressList.push new Entity 'emailAddress', 'support@opensauce.com'
+        entities.emailAddressList.push new Entity 'emailAddress', 'johnson@opensauce.com'
 
-
-
-
+        return @informationExtractor(domainTypes, ['Account', 'Contact'], entities)
+            .then (datasets) =>
+                expect(datasets[0].target).to.equal 'Account'
+                expect(datasets[1].target).to.equal 'Contact'
+                done()
+            .catch(done)
