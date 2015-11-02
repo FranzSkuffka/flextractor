@@ -6,7 +6,7 @@ gulp.task 'develop', ->
     console.log util.env.module
     if !util.env.module?
         gulp.start 'test'
-        gulp.watch '**/*.coffee', ['']
+        gulp.watch '**/*.coffee', ['test']
     if util.env.module?
         gulp.start 'testModule'
         gulp.watch '**/*.coffee', ['testModule']
