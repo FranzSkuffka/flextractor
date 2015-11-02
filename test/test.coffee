@@ -110,7 +110,23 @@ describe 'IE Module', -> # disambiguation of affiliation
 
         return @informationExtractor(domainTypes, ['Account', 'Contact'], entities)
             .then (datasets) =>
-                expect(datasets[0].target).to.equal 'Account'
-                expect(datasets[1].target).to.equal 'Contact'
+                expect(datasets.emails[0].target).to.equal 'Account'
+                expect(datasets.emails[1].target).to.equal 'Contact'
+                done()
+            .catch(done)
+    it 'Should assign a single E-Mail Address to a single Account', (done) ->
+        entities = {personNameList: [], companyNameList: [], emailAddressList: []}
+        entities.emailAddressList.push new Entity 'emailAddress', 'support@opensauce.com'
+        return @informationExtractor(domainTypes, ['Account'], entities)
+            .then (datasets) =>
+                expect(datasets.emails[0].target).to.equal 'Account'
+                done()
+            .catch(done)
+    it 'Should assign a single E-Mail Address to a single Contact', (done) ->
+        entities = {personNameList: [], companyNameList: [], emailAddressList: []}
+        entities.emailAddressList.push new Entity 'emailAddress', 'support@opensauce.com'
+        return @informationExtractor(domainTypes, ['Contact'], entities)
+            .then (datasets) =>
+                expect(datasets.emails[0].target).to.equal 'Contact'
                 done()
             .catch(done)

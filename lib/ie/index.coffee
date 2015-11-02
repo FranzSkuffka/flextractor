@@ -1,3 +1,13 @@
+_ = require 'underscore'
+# findPhoneNumberTargets = (phoneNumberList) ->
+#         phoneNumbersWithTargets = []
+#     if phoneNumberList.length == 1
+#         phoneNumberList[0].target = 'Account'
+#         phoneNumbersWithTargets.push phoneNumberList[0]
+#         return phoneNumbersWithTargets
+#     if phoneNumberList.length == 2
+#         phoneNumberList
+
 findEmailTargets = (emailAddressList, personNameGrams) ->
     genericLocalParts = ['hello', 'support', 'welcome', 'hello', 'feedback', 'info']
     emailsWithTargets = []
@@ -32,14 +42,26 @@ fillForms = (domainTypes, labels, entities) ->
         # assign accordingly
         #
         # disambiguate phones
-        if labels.indexOf 'Account' > -1 && labels.indexOf 'Contact' > -1
-            personName = entities.personNameList[0].value.split ' '
-            # grams are the first n letters
-            personNameGrams = []
-            personNameGrams.push part.substring(0,3).toLowerCase() for part in personName
-            emailsWithTargets = findEmailTargets(entities.emailAddressList, personNameGrams)
-        else
-            personName
-        resolve emailsWithTargets
+        results = {}
+        if entities.emailAddressList.length > 0
+            emailsWithTargets = []
+            if ((labels.indexOf('Account') > -1) && (labels.indexOf('Contact') > -1))
+                personName = entities.personNameList[0].value.split ' '
+                # grams are the first n letters
+                personNameGrams = []
+                personNameGrams.push part.substring(0,3).toLowerCase() for part in personName
+                emailsWithTargets = findEmailTargets(entities.emailAddressList, personNameGrams)
+            else if labels.indexOf('Account') > -1
+                for email in entities.emailAddressList
+                    email.target = 'Account'
+                    emailsWithTargets.push email
+            else if labels.indexOf('Contact') > -1
+                for email in entities.emailAddressList
+                    email.target = 'Contact'
+                    emailsWithTargets.push email
+            else
+                console.log 'E-Mail adress targets not found'
+            results.emails = emailsWithTargets
+        resolve results
 
 module.exports = fillForms
