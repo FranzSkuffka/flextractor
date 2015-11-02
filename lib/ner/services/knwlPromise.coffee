@@ -13,7 +13,7 @@ knwlEntities = (text) ->
             if email.preview?
                 meta =
                     preview:  email.preview
-            results.push new Entity 'emailAdress', email.address, meta
+            results.push new Entity 'emailAddress', email.address, meta
         resolve results
 
 

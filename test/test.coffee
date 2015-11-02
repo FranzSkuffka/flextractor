@@ -31,7 +31,6 @@ describe 'API', ->
         @extractor = new Flextractor domainTypes
     it 'should return 42', (done) ->
         @extractor.extract('Jan Wirth').then (data) ->
-            console.log data
             done()
 
 
@@ -44,7 +43,7 @@ describe 'NER Module', ->
     it 'Should recognize E-Mail adresses', (done) ->
         @ner('someone@somedomain.com')
             .then (entities) ->
-                expect(entities.emailAdressList[0].value).to.equal('someone@somedomain.com') # eeeh plural?
+                expect(entities.emailAddressList[0].value).to.equal('someone@somedomain.com') # eeeh plural?
                 done()
     it 'Should recognize personal Names', (done) ->
         name = 'Abraham Jacos'
@@ -53,7 +52,7 @@ describe 'NER Module', ->
                 expect(entities.personNameList[0].value).to.equal(name)
                 done()
 
-describe 'Contact', -> #Map features and vectors from domain structure
+describe 'Mapper', -> #Map features and vectors from domain structure
     before ->
         Mapper = require('../lib/classifier/mapper.coffee')
         @mapper = new Mapper domainTypes
