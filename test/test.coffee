@@ -14,6 +14,8 @@ domainTypes =
                 required: true
             ,
                 name: 'phoneNumber'
+            ,
+                name: 'emailAddress'
             ]
     ,
         name: 'Contact'
@@ -23,6 +25,8 @@ domainTypes =
                 required: true
             ,
                 name: 'phoneNumber'
+            ,
+                name: 'emailAddress'
             ]
     ]
 
@@ -98,9 +102,9 @@ describe 'Classification Module', -> #generate tests iteratively
                 done()
             .catch(done)
 
-describe 'IE Module', -> # disambiguation of affiliation
+describe 'Association Module', -> # disambiguation of affiliation
     before ->
-        @informationExtractor = require '../lib/ie/index'
+        @informationExtractor = require '../lib/ie/associator/index'
     it 'Should disambiguate Account and Company E-Mail adresses', (done) ->
         entities = {personNameList: [], companyNameList: [], emailAddressList: []}
         entities.companyNameList.push  new Entity 'companyName', 'OpenSauce Inc'
@@ -128,5 +132,13 @@ describe 'IE Module', -> # disambiguation of affiliation
         return @informationExtractor(domainTypes, ['Contact'], entities)
             .then (datasets) =>
                 expect(datasets.emails[0].target).to.equal 'Contact'
+                done()
+            .catch(done)
+    it 'Should assign a single phone Number to an Account', (done) ->
+        entities = {personNameList: [], companyNameList: [], phoneNumberList: []}
+        entities.phoneNumberList.push new Entity 'phoneNumber', '+49 251 91741 - 0'
+        return @informationExtractor(domainTypes, ['Account'], entities)
+            .then (datasets) =>
+                expect(datasets.phones[0].target).to.equal 'Account'
                 done()
             .catch(done)
