@@ -104,7 +104,7 @@ describe 'Classification Module', -> #generate tests iteratively
 
 describe 'Association Module', -> # disambiguation of affiliation
     before ->
-        @informationExtractor = require '../lib/ie/associator/index'
+        @associate= require '../lib/ie/associator/index'
     it 'Should disambiguate Account and Company E-Mail adresses', (done) ->
         entities = {personNameList: [], companyNameList: [], emailAddressList: []}
         entities.companyNameList.push  new Entity 'companyName', 'OpenSauce Inc'
@@ -112,33 +112,28 @@ describe 'Association Module', -> # disambiguation of affiliation
         entities.emailAddressList.push new Entity 'emailAddress', 'support@opensauce.com'
         entities.emailAddressList.push new Entity 'emailAddress', 'johnson@opensauce.com'
 
-        return @informationExtractor(domainTypes, ['Account', 'Contact'], entities)
-            .then (datasets) =>
-                expect(datasets.emails[0].target).to.equal 'Account'
-                expect(datasets.emails[1].target).to.equal 'Contact'
-                done()
-            .catch(done)
+        entitiesWithTargets = @associate(domainTypes, ['Account', 'Contact'], entities)
+        expect(entitiesWithTargets.emailAddressList[0].target.label).to.equal 'Account'
+        expect(entitiesWithTargets.emailAddressList[1].target.label).to.equal 'Contact'
+        done()
+
     it 'Should assign a single E-Mail Address to a single Account', (done) ->
         entities = {personNameList: [], companyNameList: [], emailAddressList: []}
         entities.emailAddressList.push new Entity 'emailAddress', 'support@opensauce.com'
-        return @informationExtractor(domainTypes, ['Account'], entities)
-            .then (datasets) =>
-                expect(datasets.emails[0].target).to.equal 'Account'
-                done()
-            .catch(done)
-    it 'Should assign a single E-Mail Address to a single Contact', (done) ->
-        entities = {personNameList: [], companyNameList: [], emailAddressList: []}
-        entities.emailAddressList.push new Entity 'emailAddress', 'support@opensauce.com'
-        return @informationExtractor(domainTypes, ['Contact'], entities)
-            .then (datasets) =>
-                expect(datasets.emails[0].target).to.equal 'Contact'
-                done()
-            .catch(done)
-    it 'Should assign a single phone Number to an Account', (done) ->
-        entities = {personNameList: [], companyNameList: [], phoneNumberList: []}
-        entities.phoneNumberList.push new Entity 'phoneNumber', '+49 251 91741 - 0'
-        return @informationExtractor(domainTypes, ['Account'], entities)
-            .then (datasets) =>
-                expect(datasets.phones[0].target).to.equal 'Account'
-                done()
-            .catch(done)
+        entitiesWithTargets =  @associate(domainTypes, ['Account'], entities)
+        expect(entitiesWithTargets.emailAddressList[0].target.label).to.equal 'Account'
+        done()
+
+     it 'Should assign a single E-Mail Address to a single Contact', (done) ->
+         entities = {personNameList: [], companyNameList: [], emailAddressList: []}
+         entities.emailAddressList.push new Entity 'emailAddress', 'support@opensauce.com'
+         entitiesWithTargets =  @associate(domainTypes, ['Contact'], entities)
+         expect(entitiesWithTargets.emailAddressList[0].target.label).to.equal 'Contact'
+         done()
+
+     it 'Should assign a single phone Number to an Account', (done) ->
+         entities = {personNameList: [], companyNameList: [], phoneNumberList: []}
+         entities.phoneNumberList.push new Entity 'phoneNumber', '+49 251 91741 - 0'
+         entitiesWithTargets =  @associate(domainTypes, ['Account'], entities)
+         expect(entitiesWithTargets.phoneNumberList[0].target.label).to.equal 'Account'
+         done()
