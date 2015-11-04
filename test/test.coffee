@@ -33,8 +33,10 @@ domainTypes =
 describe 'API', ->
     before ->
         @extractor = new Flextractor domainTypes
-    it 'should return 42', (done) ->
-        @extractor.extract('Jan Wirth').then (data) ->
+    it 'Extract a simple contact', (done) ->
+        @extractor.extract('Jan Wirth \n jan@bla.com').then (datasets) ->
+            expect(datasets[0].data[0].value).to.equal('jan@bla.com')
+            expect(datasets[0].data[1].value).to.equal('Jan Wirth')
             done()
 
 

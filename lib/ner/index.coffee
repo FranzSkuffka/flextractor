@@ -15,13 +15,14 @@ ner = (text) =>
                 entities[pluralTypeName] = [entity]
             else
                 entities[pluralTypeName].push entity
-            return entities
+        return entities
 
     if !text?
         throw new Error('No input provided')
     # join api results
     Promise.join knwlEntities(text), alchemyEntities(text), (knwlRes, alchemyRes) ->
-        new Promise (resolve) -> resolve collectEntities(knwlRes.concat alchemyRes)
+        new Promise (resolve) ->
+            resolve collectEntities(knwlRes.concat alchemyRes)
 
 
 
