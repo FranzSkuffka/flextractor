@@ -7,6 +7,7 @@ module.exports =
                 required: true
             ,
                 name: 'phoneNumber'
+                variants: ['fax']
             ,
                 name: 'emailAddress'
             ]
@@ -21,4 +22,16 @@ module.exports =
             ,
                 name: 'emailAddress'
             ]
+        relation: 'Account'
+    ,
+        name: 'Chance'
+        fields:
+            [
+                name: 'financialValue'
+                required: true
+            ,
+                name: 'probability'
+                required: true
+            ]
+        relation: 'Account'
     ]
