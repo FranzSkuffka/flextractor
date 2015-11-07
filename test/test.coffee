@@ -5,30 +5,7 @@ Flextractor  =  require      '../'
 brain        =  require      'brain'
 Entity       =  require '../lib/ner/services/Entity'
 
-domainTypes =
-    [
-        name: 'Account'
-        fields:
-            [
-                name: 'companyName'
-                required: true
-            ,
-                name: 'phoneNumber'
-            ,
-                name: 'emailAddress'
-            ]
-    ,
-        name: 'Contact'
-        fields:
-            [
-                name: 'personName'
-                required: true
-            ,
-                name: 'phoneNumber'
-            ,
-                name: 'emailAddress'
-            ]
-    ]
+domainTypes =  require './domainStructure'
 
 describe 'API', ->
     before ->
