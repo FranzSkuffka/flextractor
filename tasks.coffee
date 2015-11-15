@@ -14,7 +14,7 @@ gulp.task 'develop', ->
 gulp.task 'testModule', ->
     console.log 'Testing ' + util.env.module
     gulp.src ''
-        .pipe shell 'mocha test/test.coffee --grep ' + util.env.module
+        .pipe shell 'mocha test --recursive --grep ' + util.env.module
 
 gulp.task 'test', ->
     gulp.src ''

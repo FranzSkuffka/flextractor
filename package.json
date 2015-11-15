@@ -4,7 +4,7 @@
   "description": "Module for extracting datasets from unstructured text",
   "main": "lib/index.coffee",
   "scripts": {
-    "test": "mocha test/test.coffee"
+    "test": "mocha test --recursive"
   },
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
     "brain": "^0.7.0",
     "coffee-script": "^1.10.0",
     "gulp-util": "^3.0.7",
-    "knwl.js": "^1.0.2",
+    "knwl.js": "franzskuffka/Knwl.js",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
