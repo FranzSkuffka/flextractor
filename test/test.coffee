@@ -16,7 +16,6 @@ describe 'API', ->
             expect(datasets[0].data[1].value).to.equal('Jan Wirth')
             done()
 
-
 describe 'NER Module', ->
     before ->
         @ner = require '../lib/ner/index.coffee'
@@ -33,6 +32,16 @@ describe 'NER Module', ->
         @ner(name)
             .then (entities) ->
                 expect(entities.personNameList[0].value).to.equal(name)
+                done()
+    it 'Should recognize Euro values', (done) ->
+        @ner('20000 Euros')
+            .then (entities) ->
+                expect(entities.financialValueList[0].value).to.equal('EUR 20000')
+                done()
+    it 'Should recognize probabilities', (done) ->
+        @ner('20%')
+            .then (entities) ->
+                expect(entities.probabilityList[0].value).to.equal(20)
                 done()
 
 describe 'Mapper', -> #Map features and vectors from domain structure
@@ -71,6 +80,12 @@ describe 'Classification Module', -> #generate tests iteratively
         @classifier.classify(['personName'])
             .then (classes) =>
                 expect(classes[0]).to.equal 'Contact'
+                done()
+            .catch(done)
+    it 'Should correctly classify a chance', (done) ->
+        @classifier.classify(['probability', 'financialValue'])
+            .then (classes) =>
+                expect(classes[0]).to.equal 'Chance'
                 done()
             .catch(done)
     it 'Should correctly classify multiple labels', (done) ->
