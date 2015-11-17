@@ -3,7 +3,7 @@ class Dataset
         @data = []
         for entity in entities
             dataEntry = {}
-            dataEntry.name = entity.target
+            dataEntry.name = entity.target.field # targetfield of entity
             dataEntry.value = entity.value
             @data.push dataEntry
 
