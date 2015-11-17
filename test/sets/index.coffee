@@ -9,7 +9,6 @@ fs = require 'fs'
 
 describe 'Basic sets', ->
     before ->
-        console.log 'preparing'
         @extractor = new Flextractor domainTypes
     it 'Should recognize a simple account', (done) ->
         fs.readFile './test/sets/accounts/simple', (err, data) =>
@@ -43,6 +42,7 @@ describe 'Basic sets', ->
             @extractor.extract(data.toString()).then (datasets) ->
                 expect(datasets[0].type).to.equal 'Contact'
                 done()
+
     it 'Should recognize a noisy contact', (done) ->
         fs.readFile './test/sets/contacts/noisy', (err, data) =>
 
@@ -50,3 +50,21 @@ describe 'Basic sets', ->
                 expect(datasets[0].type).to.equal 'Contact'
                 done()
 
+
+    it 'Should recognize a combined Account and Chance with relation', (done) ->
+        fs.readFile './test/sets/mixed/accountChance', (err, data) =>
+
+            @extractor.extract(data.toString())
+                .then (datasets) ->
+                    expect(datasets[0].type).to.equal 'Chance'
+                    done()
+                .catch(done)
+
+    it 'Should recognize a combined Account and Chance with relation', (done) ->
+        fs.readFile './test/sets/mixed/accountChance', (err, data) =>
+
+            @extractor.extract(data.toString())
+                .then (datasets) ->
+                    expect(datasets[0].type).to.equal 'Chance'
+                    done()
+                .catch(done)
