@@ -12,7 +12,11 @@ module.exports = (net, domainTypes) ->
     trainingVectors = []
     for rule in rules
         trainingVectors = trainingVectors.concat rule(labels, features)
-    net.train trainingVectors
+    trainingOptions =
+        errorThresh: 0.00001
+        iterations: 200000
+        learingRate: 0.5
+    console.log net.train trainingVectors, trainingOptions
     net
 
 
