@@ -80,6 +80,52 @@ incompleteRule = (labels, features) ->
         vectorPairs.push vector
     vectorPairs
 
+incompleteExclusiveRule = (labels, features) ->
+    vectorPairs = []
+    # generate required not fullfilled input vector
+    for label in labels
+
+        # generate default zero output vector
+        outputVector = []
+        for targetLabel in labels
+            outputVector.push 0
+
+        # collect indices of required features
+        featureIndex = 0
+        requiredFeatureIndices = []
+        for feature, classList of features
+            # if feauture is required
+            if classList.indexOf(label.name) > -1 && label.requires feature
+                requiredFeatureIndices.push featureIndex
+            featureIndex++
+
+        # spit vector for each required feature
+        for requiredFeatureIndex in requiredFeatureIndices
+            inputVector = []
+            featureIndex = 0
+            for feature, classList of features
+
+                # insert positive for all labels
+                if classList.indexOf(label.name) > -1
+                    inputVector.push 1
+
+                # except for required feature. then replace last part of vector
+                if requiredFeatureIndex == featureIndex
+                    inputVector.pop()
+                    inputVector.push 0
+                # if not available
+                if classList.indexOf(label.name) < 0
+                    inputVector.push 0
+
+                featureIndex++
+
+            # generate output vector
+            vector =
+                input: inputVector
+                output: outputVector
+            vectorPairs.push vector
+    vectorPairs
+
 
 module.exports =
-    [minimumRule, incompleteRule, zeroRule]
+    [minimumRule,incompleteRule,incompleteExclusiveRule,  zeroRule]
