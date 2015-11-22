@@ -3,7 +3,10 @@ disambiguate = {}
 disambiguate.phoneNumber = (phoneNumberList) ->
     phoneNumbersWithTargets = []
     if phoneNumberList.length == 1
-        phoneNumberList[0].target = 'Account'
+        target = {}
+        target.label = 'Account'
+        target.field = 'phoneNumber'
+        phoneNumberList[0].target = target
         phoneNumbersWithTargets.push phoneNumberList[0]
         return phoneNumbersWithTargets
     if phoneNumberList.length == 2

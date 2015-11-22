@@ -23,7 +23,8 @@ ner = (text) =>
     # join api results
     Promise.join knwlEntities(text), alchemyEntities(text), (knwlRes, alchemyRes) ->
         new Promise (resolve) ->
-            resolve collectEntities(knwlRes.concat alchemyRes)
+            entities = collectEntities(knwlRes.concat alchemyRes)
+            resolve entities
 
 
 

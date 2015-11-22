@@ -24,6 +24,8 @@ describe 'Basic sets', ->
             @extractor.extract(data.toString())
                 .then (datasets) ->
                     expect(datasets[0].type).to.equal 'Account'
+                    expect(datasets.length).to.equal 1
+                    expect(datasets[0].data.length).to.equal 3
                     done()
                 .catch(done)
     it 'Should recognize a noisy account', (done) ->
@@ -31,6 +33,9 @@ describe 'Basic sets', ->
             @extractor.extract(data.toString())
                 .then (datasets) ->
                     expect(datasets[0].type).to.equal 'Account'
+                    expect(datasets[0].type).to.equal 'Account'
+                    expect(datasets.length).to.equal 1
+                    expect(datasets[0].data.length).to.equal 2
                     done()
                 .catch(done)
 
@@ -39,6 +44,8 @@ describe 'Basic sets', ->
             @extractor.extract(data.toString())
                 .then (datasets) ->
                     expect(datasets[0].type).to.equal 'Chance'
+                    expect(datasets.length).to.equal 1
+                    expect(datasets[0].data.length).to.equal 2
                     done()
                 .catch(done)
     it 'Should recognize a noisy chance', (done) ->
@@ -46,6 +53,8 @@ describe 'Basic sets', ->
             @extractor.extract(data.toString())
                 .then (datasets) ->
                     expect(datasets[0].type).to.equal 'Chance'
+                    expect(datasets.length).to.equal 1
+                    expect(datasets[0].data.length).to.equal 2
                     done()
                 .catch(done)
 
@@ -54,6 +63,8 @@ describe 'Basic sets', ->
             @extractor.extract(data.toString())
                 .then (datasets) ->
                     expect(datasets[0].type).to.equal 'Contact'
+                    expect(datasets.length).to.equal 1
+                    expect(datasets[0].data.length).to.equal 3
                     done()
                 .catch(done)
 
@@ -63,6 +74,8 @@ describe 'Basic sets', ->
             @extractor.extract(data.toString())
                 .then (datasets) ->
                     expect(datasets[0].type).to.equal 'Contact'
+                    expect(datasets.length).to.equal 1
+                    expect(datasets[0].data.length).to.equal 3
                     done()
                 .catch(done)
 
