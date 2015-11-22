@@ -16,7 +16,7 @@ module.exports = (net, domainTypes) ->
         errorThresh: 0.00001
         iterations: 200000
         learingRate: 0.5
-    console.log net.train trainingVectors, trainingOptions
+    net.train trainingVectors, trainingOptions
     net
 
 
