@@ -20,7 +20,7 @@ describe 'NER Module', ->
     before ->
         @ner = require '../lib/ner/index.coffee'
     it 'Should throw if no input is provided', ->
-        (=> @ner()).should.throw()
+        (=> @ner()).should.throw(Error)
         (=> @ner('Isaac Newton')).should.not.throw()
     it 'Should recognize E-Mail adresses', (done) ->
         @ner('someone@somedomain.com')

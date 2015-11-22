@@ -18,7 +18,8 @@ ner = (text) =>
         return entities
 
     if !text?
-        throw new Error('No input provided')
+        throw new Error("input is #{ text }")
+
     # join api results
     Promise.join knwlEntities(text), alchemyEntities(text), (knwlRes, alchemyRes) ->
         new Promise (resolve) ->
