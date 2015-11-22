@@ -18,6 +18,9 @@ knwlEntities = (text) ->
         for ratio in knwlSync.get 'ratios'
             results.push new Entity 'probability', ratio.percentileValue
 
+        for phone in knwlSync.get 'phones'
+            results.push new Entity 'phoneNumber', phone.phone
+
         for email in knwlSync.get 'emails'
             if email.preview?
                 meta =
