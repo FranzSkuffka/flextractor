@@ -1,8 +1,8 @@
 Entity  = require './Entity'
 Alchemy = require './alchemy.js'
-alchemy = new Alchemy()
 
-alchemyEntities = (text) ->
+alchemyEntities = (text, apiKey) ->
+    alchemy = new Alchemy(apiKey)
     entityMap =
         Person: 'personName'
         Company: 'companyName'

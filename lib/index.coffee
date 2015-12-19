@@ -1,15 +1,17 @@
 Promise = require 'bluebird'
 
 fillForms = require './ie/index'
+Classifier = require('./classifier/index')
+ner= require('./ner/index')
 
 class Flextractor
-    constructor: (@domainTypes) ->
-        Classifier = new require('./classifier/index')
+    constructor: (@domainTypes, opts) ->
         @classifier = new Classifier(@domainTypes)
-        @ner= require('./ner/index')
+        @ner = ner
+        @apiKeys = opts.apiKeys
 
     extract: (text) ->
-        @ner text
+        @ner text, @apiKeys
             .then (entities) =>
                 recognizedFeatures = []
                 for listName of entities

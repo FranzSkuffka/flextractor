@@ -5,7 +5,7 @@ alchemyEntities = require './services/alchemyPromise.coffee'
 
 
 
-ner = (text) =>
+ner = (text, apiKeys) =>
     collectEntities = (entityList) ->
         entities = {}
         for entity in entityList
@@ -21,7 +21,7 @@ ner = (text) =>
         throw new Error("input is #{ text }")
 
     # join api results
-    Promise.join knwlEntities(text), alchemyEntities(text), (knwlRes, alchemyRes) ->
+    Promise.join knwlEntities(text), alchemyEntities(text, apiKeys.alchemy), (knwlRes, alchemyRes) ->
         new Promise (resolve) ->
             entities = collectEntities(knwlRes.concat alchemyRes)
             resolve entities
