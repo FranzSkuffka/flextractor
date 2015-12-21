@@ -1,6 +1,6 @@
 Promise = require 'bluebird'
-knwlEntities = require './services/knwlPromise.coffee'
-alchemyEntities = require './services/alchemyPromise.coffee'
+knwlEntities = require './services/knwlPromise'
+alchemyEntities = require './services/alchemyPromise'
 
 
 

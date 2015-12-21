@@ -2,7 +2,7 @@
   "name": "flextractor",
   "version": "0.0.1",
   "description": "Module for extracting datasets from unstructured text",
-  "main": "lib/index.coffee",
+  "main": "lib/index",
   "scripts": {
     "test": "mocha test --recursive"
   },
