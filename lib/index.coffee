@@ -5,13 +5,13 @@ Classifier = require('./classifier/index')
 ner= require('./ner/index')
 
 class Flextractor
-    constructor: (@domainTypes, opts) ->
+    constructor: (@domainTypes, @opts) ->
+        Classifier = new require('./classifier/index')
         @classifier = new Classifier(@domainTypes)
-        @ner = ner
-        @apiKeys = opts.apiKeys
+        @ner = require('../../ner-unifier')
 
     extract: (text) ->
-        @ner text, @apiKeys
+        @ner text, @opts.apiKeys, @opts
             .then (entities) =>
                 recognizedFeatures = []
                 for listName of entities

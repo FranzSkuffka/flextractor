@@ -3,46 +3,21 @@ chai         =  require      'chai'
 expect       =  chai.expect
 Flextractor  =  require      '../'
 brain        =  require      'brain'
-Entity       =  require '../lib/ner/services/Entity'
+Entity       =  require('../../ner-unifier').Entity
 
 domainTypes =  require './domainStructure'
 
+
 describe 'API', ->
     before ->
-        @extractor = new Flextractor domainTypes
+        keys = require '../../ner-unifier/test/API_keys_module'
+        @extractor = new Flextractor domainTypes, {apiKeys: keys}
     it 'Extract a simple contact', (done) ->
-        @extractor.extract('Jan Wirth \n jan@bla.com').then (datasets) ->
-            expect(datasets[0].data[0].value).to.equal('jan@bla.com')
-            expect(datasets[0].data[1].value).to.equal('Jan Wirth')
+        @extractor.extract('Steve Jobs \n email: steve@jobs.com').then (datasets) ->
+            expect(datasets[0].type).to.equal('Contact')
+            expect(datasets[0].data[0].value).to.equal('Steve Jobs')
+            expect(datasets[0].data[1].value).to.equal('steve@jobs.com')
             done()
-
-describe 'NER Module', ->
-    before ->
-        @ner = require '../lib/ner/index.coffee'
-    it 'Should throw if no input is provided', ->
-        (=> @ner()).should.throw(Error)
-        (=> @ner('Isaac Newton')).should.not.throw()
-    it 'Should recognize E-Mail adresses', (done) ->
-        @ner('someone@somedomain.com')
-            .then (entities) ->
-                expect(entities.emailAddressList[0].value).to.equal('someone@somedomain.com') # eeeh plural?
-                done()
-    it 'Should recognize personal Names', (done) ->
-        name = 'Abraham Jacos'
-        @ner(name)
-            .then (entities) ->
-                expect(entities.personNameList[0].value).to.equal(name)
-                done()
-    it 'Should recognize Euro values', (done) ->
-        @ner('20000 Euros')
-            .then (entities) ->
-                expect(entities.financialValueList[0].value).to.equal('EUR 20000')
-                done()
-    it 'Should recognize probabilities', (done) ->
-        @ner('20%')
-            .then (entities) ->
-                expect(entities.probabilityList[0].value).to.equal(20)
-                done()
 
 describe 'Mapper', -> #Map features and vectors from domain structure
     before ->
