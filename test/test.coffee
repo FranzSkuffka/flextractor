@@ -1,23 +1,20 @@
 mocha        =  require      'mocha'
 chai         =  require      'chai'
 expect       =  chai.expect
-Flextractor  =  require      '../'
 brain        =  require      'brain'
 Entity       =  require('../../ner-unifier').Entity
-
-domainTypes =  require './domainStructure'
-
+domainTypes  =  require './domainStructure'
 
 describe 'API', ->
     before ->
-        keys = require '../../ner-unifier/test/API_keys_module'
-        @extractor = new Flextractor domainTypes, {apiKeys: keys}
+        @extractor = require './flextractorInstance.coffee'
     it 'Extract a simple contact', (done) ->
-        @extractor.extract('Steve Jobs \n email: steve@jobs.com').then (datasets) ->
-            expect(datasets[0].type).to.equal('Contact')
-            expect(datasets[0].data[0].value).to.equal('Steve Jobs')
-            expect(datasets[0].data[1].value).to.equal('steve@jobs.com')
-            done()
+        @extractor.extract('Steve Jobs \n email: steve@jobs.com')
+            .then (datasets) ->
+                expect(datasets[0].type).to.equal('Contact')
+                expect(datasets[0].data[0].value).to.equal('Steve Jobs')
+                expect(datasets[0].data[1].value).to.equal('steve@jobs.com')
+                done()
 
 describe 'Mapper', -> #Map features and vectors from domain structure
     before ->

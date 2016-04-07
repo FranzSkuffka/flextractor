@@ -10,6 +10,10 @@ module.exports =
                 variants: ['fax']
             ,
                 name: 'emailAddress'
+            ,
+                name: 'website'
+            ,
+                name: 'city'
             ]
     ,
         name: 'Contact'
