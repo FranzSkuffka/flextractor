@@ -2,7 +2,6 @@ Promise = require 'bluebird'
 
 fillForms = require './ie/index'
 Classifier = require('./classifier/index')
-ner= require('./ner/index')
 
 class Flextractor
     constructor: (@domainTypes, @opts) ->
