@@ -112,6 +112,13 @@ describe 'Basic sets', ->
             @extractor.extract(data.toString())
                 .then (datasets) ->
                     console.log datasets
-                    # expect(datasets.length).to.equal 3
+                    done()
+                .catch(done)
+    it.only 'should associate emails correctly complex input', (done) ->
+        fs.readFile './test/sets/complex/2', (err, data) =>
+
+            @extractor.extract(data.toString())
+                .then (datasets) ->
+                    console.log datasets
                     done()
                 .catch(done)
