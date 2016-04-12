@@ -7,10 +7,7 @@ class Flextractor
     constructor: (@domainTypes, @opts) ->
         Classifier = new require('./classifier/index')
         @classifier = new Classifier(@domainTypes)
-        try
-            @ner = require('../../ner-unifier')
-        catch
-            @ner = require('ner-unifier')
+        @ner = require('ner-unifier')
 
     extract: (text) ->
         @ner text, @opts.apiKeys, @opts
