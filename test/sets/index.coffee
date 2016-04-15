@@ -106,7 +106,7 @@ describe 'Basic sets', ->
                     done()
                 .catch(done)
 
-    it.only 'should not choke on complex input', (done) ->
+    it 'should not choke on complex input', (done) ->
         fs.readFile './test/sets/complex/1', (err, data) =>
 
             @extractor.extract(data.toString())
@@ -119,6 +119,10 @@ describe 'Basic sets', ->
 
             @extractor.extract(data.toString())
                 .then (datasets) ->
-                    console.log datasets
+                    # console.log JSON.stringify datasets, null, 4
+                    for set in datasets
+                        for field in set.data
+                            expect(field.value).to.not.be.undefined
+                            expect(field.name).to.not.be.undefined
                     done()
                 .catch(done)
