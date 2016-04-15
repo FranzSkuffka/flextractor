@@ -11,3 +11,8 @@ publish:
 	make build
 	npm publish .
 	make unbuild
+
+browserify:
+	make build
+	browserify Flextractor-browserify.js > Flextractor-browser.js
+	make unbuild
