@@ -27,7 +27,7 @@ findEmailTargets = (emailAddressList, personNameGrams) ->
     for emailAddress in emailAddressList
         targetFound = false # use this to break the loop
         localPart = emailAddress.value.split('@')[0]
-        target = {}
+        target = {field: 'emailAddress'}
         for genericLocalPart in genericLocalParts # check if can be associated to Account through generic local parts
             if genericLocalPart == localPart
                 target.label = 'Account'
@@ -44,6 +44,5 @@ findEmailTargets = (emailAddressList, personNameGrams) ->
             target.label = 'Account'
         emailAddress.target = target
         emailsWithTargets.push emailAddress
-
     emailsWithTargets
 module.exports = disambiguate
